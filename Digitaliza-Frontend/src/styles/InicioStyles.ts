@@ -2,6 +2,7 @@ export const BoxInicio = {
     display: "flex",
     flexDirection: "column",
     backgroundColor: "#2B2E34",
+    boxShadow: "0px 4px 4 px #000000",
     gap: 5,
     paddingTop: "15px",
     paddingBottom: "15px",
@@ -17,7 +18,7 @@ export const TitleStyle = {
     textShadow: '8px 8px 0px rgba(0, 0, 0, 1)',
     fontFamily: "Tactic Sans",
     fontWeight: 800,
-    fontSize: { xs: "35px", sm: "60px", md: "60px" }
+    fontSize: { xs: "38px", sm: "60px", md: "65px", xl: "70px" }
 }
 
 export const BoxInputInicio = {
@@ -28,7 +29,6 @@ export const BoxInputInicio = {
 export const ButtonStylesInicio = {
     width: { xs: "350px", sm: "500px", md: "500px" },
     height: "60px",
-    boxShadow: "6px 6px 0px #000000",
     borderRadius: "16px",
     backgroundColor: "white",
     fontFamily: "tactic sans",
@@ -38,8 +38,11 @@ export const ButtonStylesInicio = {
     WebkitTextStroke: '1px black',
     textShadow: "2px 2px 0 #000000",
     textTransform: 'none',
-
-
+    transition: "boxShadow 0.4s ease, transform 0.4s ease",
+    '&:hover': {
+        boxShadow: {xs:"6px 4px 0px #000000", sm: "8px 6px 0px #000000" ,md:" 8px 6px 0px #000000"},
+        transform: "scale(1.05)"
+    }
 }
 
 export const LogoSumaStyle = {
@@ -55,12 +58,32 @@ export const LogoSumaStyle = {
 // Estilos de CARDS
 
 export const CardStyle = {
-    width:"200px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     height: "250px",
     backgroundColor: "#DADADA",
-    border: " 4px solid #FAFAFA",
+    border: "4px solid black",
     borderRadius: "12px",
-    boxShadow: " 8px 6px 0px #000000",
+    transition: "boxShadow 0.4s ease, transform 0.4s ease",
+    "&:hover": {
+        boxShadow: " 8px 6px 0px #000000",
+        transform: "scale(1.05)"
+    },
+}
+
+export const StyleBoxTextCard = {
+    textAlign: "center",
+    marginTop: "20px"
+}
+
+export const StyleTextCard = {
+    WebkitTextStroke: '1px black',
+    textShadow: "2px 2px 0 #000000",
+    color: "#E6E6E6",
+    fontFamily: "Tactic Sans",
+    fontWeight: 600,
+    fontSize: "20px",
 }
 
 

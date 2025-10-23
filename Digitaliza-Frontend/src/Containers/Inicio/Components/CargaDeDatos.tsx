@@ -13,11 +13,16 @@ const CargaDeDatos = (): JSX.Element => {
                 </Typography>
             </Box>
 
-            <Grid container direction={{xs: "column", md: "row"}} rowSpacing={2} sx={BoxInputInicio}>
+            <Grid container 
+            direction={{ xs: "column", md: "row" }} 
+            rowSpacing={2} 
+            sx={BoxInputInicio}>
                 <Grid>
                     <Button sx={ButtonStylesInicio}>
 
-                        <Box component={"img"} src={LogoSuma} sx={LogoSumaStyle}/>
+                        <Box component={"img"} 
+                        src={LogoSuma} 
+                        sx={LogoSumaStyle} />
 
                         Cargar Actuacion
 
@@ -27,7 +32,9 @@ const CargaDeDatos = (): JSX.Element => {
                 <Grid>
                     <Button sx={ButtonStylesInicio}>
 
-                         <Box component={"img"} src={LogoSuma} sx={LogoSumaStyle}/>
+                        <Box component={"img"} 
+                        src={LogoSuma} 
+                        sx={LogoSumaStyle} />
 
                         Cargar Relevamiento
                     </Button>
