@@ -17,4 +17,16 @@ export const TableTitleStyles = {
     fontSize: { xs: "20px", sm: "35px", md: "50px" }
 }
 
+export const TableExportBoxStyles = {
+    display: "flex", 
+    gap: "10px", 
+    padding: "10px", 
+    flexDirection:{xs:"column", md: "row"},
+}
+
+export const TableExportButtonStyles = {
+    fontSize:{xs:"12px",sm:"14px"}, 
+    color: "#0166FF"
+}
+
 

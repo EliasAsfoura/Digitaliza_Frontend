@@ -11,6 +11,8 @@ import { BASE_TABLE_CONFIG } from "../../../constants/tableConfig";
 import { data as initialData } from "../../../data/personData";
 import type { IPerson } from "../../../types/Person";
 import {
+  TableExportBoxStyles,
+  TableExportButtonStyles,
   TableGeneralStyles,
   TableTitleStyles,
 } from "../../../styles/TablasStyle";
@@ -79,10 +81,11 @@ const TablaActuaciones = () => {
     data,
     enableRowSelection: true,
     renderTopToolbarCustomActions: ({ table }) => (
-      <Box sx={{ display: "flex", gap: "16px", padding: "8px", flexWrap: "wrap" }}>
+      <Box sx={TableExportBoxStyles}>
         <Button
           onClick={() => exportAllData(data)}
           startIcon={<FileDownloadIcon />}
+          sx={TableExportButtonStyles}
         >
           Exportar todo
         </Button>
@@ -95,6 +98,7 @@ const TablaActuaciones = () => {
             exportVisibleRows(table.getSelectedRowModel().rows, table)
           }
           startIcon={<FileDownloadIcon />}
+          sx={TableExportButtonStyles}
         >
           Exportar seleccionados
         </Button>
@@ -103,6 +107,7 @@ const TablaActuaciones = () => {
           disabled={table.getRowModel().rows.length === 0}
           onClick={() => exportVisibleRows(table.getRowModel().rows, table)}
           startIcon={<FileDownloadIcon />}
+          sx={TableExportButtonStyles}
         >
           Exportar página
         </Button>
@@ -111,7 +116,14 @@ const TablaActuaciones = () => {
   });
   return (
     <Box sx={{ width: "100%" }}>
-      <Box sx={TableGeneralStyles}>
+      <Box sx={{
+          ...TableGeneralStyles,
+          "& .MuiBox-root.css-wsew38": {
+            display: "flex",
+            flexDirection:{xs:"column",md:"row"},
+            gap: 2,
+          },
+        }}>
         <Typography sx={TableTitleStyles}>Gestión de Actuaciones</Typography>
         <MaterialReactTable table={table} />
       </Box>
