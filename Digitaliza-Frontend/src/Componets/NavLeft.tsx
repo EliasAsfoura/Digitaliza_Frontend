@@ -16,7 +16,7 @@ const NavLeft = () => {
     const [open, setOpen] = useState(false);
 
     return (
-        <Box sx={{display: "flex",}}>
+        <Box sx={{ }}>
 
             <Drawer
                 variant="permanent"

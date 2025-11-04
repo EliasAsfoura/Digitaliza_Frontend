@@ -21,7 +21,6 @@ export const StyleListItems = {
 export const StyleDrawer = (open: boolean): SxProps<Theme> => ({
     width: open ? 230 : 70,
     flexShrink: 0,
-    height: "97vh",
     fontSize:"10px",
     "& .MuiDrawer-paper": {
         width: open ? 230 : 70,
@@ -30,9 +29,11 @@ export const StyleDrawer = (open: boolean): SxProps<Theme> => ({
         backgroundColor: "#2B2E34",
         color: "white",
         borderRadius: "25px",
-        position: "relative",
+        position: "fixed",
+        height:"97vh",
         marginLeft: "20px",
         marginTop: "10px",
+        marginBottom:"10px",
         alignItems: "center",
     },
 }

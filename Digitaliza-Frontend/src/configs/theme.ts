@@ -1,8 +1,12 @@
 import { createTheme } from "@mui/material/styles";
 
-const theme = createTheme({
+export const theme = createTheme({
   typography: {
     fontFamily: `"Tactic Sans", "Roboto", "Arial", sans-serif`,}
 });
 
-export default theme;
+export const darkTheme = createTheme({
+  palette:{
+    mode: 'dark'
+  }
+})
