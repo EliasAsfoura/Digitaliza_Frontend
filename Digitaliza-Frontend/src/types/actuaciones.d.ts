@@ -1,4 +1,4 @@
-export interface IPerson {
+export interface IActuacion {
     rubro: string;
     distrito: number;
     inspector1: string;

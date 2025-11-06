@@ -1,6 +1,6 @@
-import type { IPerson } from "../types/Person";
+import type { IActuacion } from "../types/actuaciones";
 
-export const data : IPerson[] = [
+export const data : IActuacion[] = [
     {
         rubro: "Carniceria",
         distrito: 3,

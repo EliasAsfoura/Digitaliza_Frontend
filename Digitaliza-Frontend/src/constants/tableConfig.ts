@@ -5,6 +5,7 @@ export const BASE_TABLE_CONFIG = {
   enableDensityToggle: false,
   enableSelectAll: true,
   enableGrouping: true,
+  enableRowSelection: true,
   muiTopToolbarProps: {
     sx: { backgroundColor: "#2B2E34" },
   },
@@ -14,14 +15,13 @@ export const BASE_TABLE_CONFIG = {
   muiTableHeadCellProps: {
     sx: {
       color: "#0166FF",
-      fontWeight: "bold",
+      fontWeight: "Bold",
       fontSize: "16px",
       fontFamily: "tactic sans",
-      textAlign: "center",
     },
   },
   muiTableContainerProps: {
-      sx: { maxHeight: {xs: "550px",sm: "300px",md: "250px" ,lg: "350px", xl: "500px" }, overflowY: "auto", },
-    },
+    sx: { maxHeight: { xs: "550px", sm: "300px", md: "250px", lg: "350px", xl: "500px" }, overflowY: "auto", },
+  },
 };
 
