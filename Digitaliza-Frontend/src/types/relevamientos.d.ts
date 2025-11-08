@@ -1,7 +1,7 @@
 export interface IRelevamiento {
-// Campos a modificar
-  id: string;
-  zona: string;
-  observaciones: string;
+  id: number;
   fecha: string;
+  inspector: string;
+  direccion: string;
+  rubro: string;
 }

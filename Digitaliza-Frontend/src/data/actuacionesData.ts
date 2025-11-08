@@ -2,6 +2,7 @@ import type { IActuacion } from "../types/actuaciones";
 
 export const data : IActuacion[] = [
     {
+        id: 1,
         rubro: "Carniceria",
         distrito: 3,
         inspector1: "Juan Galvan",
@@ -11,6 +12,7 @@ export const data : IActuacion[] = [
         clausuras: 0,
     },
     {
+        id: 2,
         rubro: "Panaderia",
         distrito: 2,
         inspector1: "SodAaA",
@@ -20,6 +22,8 @@ export const data : IActuacion[] = [
         clausuras: 0
     },
     {
+
+        id: 3,
         rubro: "Carniceria",
         distrito: 3,
         inspector1: "Peron",
@@ -29,6 +33,7 @@ export const data : IActuacion[] = [
         clausuras: 0
     },
     {
+        id: 4,
         rubro: "Drugstore",
         distrito: 4,
         inspector1: "Raul Politi",
@@ -38,6 +43,7 @@ export const data : IActuacion[] = [
         clausuras: 1
     },
     {
+        id: 5,
         rubro: "Drugstore",
         distrito: 5,
         inspector1: "Raul Galvan",
@@ -47,6 +53,8 @@ export const data : IActuacion[] = [
         clausuras: 2
     },
     {
+
+        id: 6,
         rubro: "Drugstore",
         distrito: 3,
         inspector1: "Raul Politi",
@@ -56,6 +64,7 @@ export const data : IActuacion[] = [
         clausuras: 2
     },
     {
+        id: 7,
         rubro: "Fiambreria",
         distrito: 4,
         inspector1: "Raul Politi",
@@ -65,6 +74,7 @@ export const data : IActuacion[] = [
         clausuras: 1
     },
     {
+        id: 8,
         rubro: "Carniceria",
         distrito: 1,
         inspector1: "Raul Politi",

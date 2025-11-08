@@ -1,3 +1,4 @@
+import { keyframes } from "@emotion/react";
 
 export const TableGeneralStyles = {
     width: { xs: "250px", sm: "500px", md: "900px", lg: "900px", xl: "1200px" },
@@ -25,8 +26,30 @@ export const TableExportBoxStyles = {
 }
 
 export const TableExportButtonStyles = {
-    fontSize:{xs:"12px",sm:"14px"}, 
+    fontFamily: "Tactic Sans",
+    textTransform: "none",
+    fontSize:{xs:"12px",sm:"14px"},
     color: "#0166FF"
 }
+
+const shadowFade = keyframes`
+  0% {
+    text-shadow: 0px 0px 0px rgba(5, 60, 255, 0);
+  }
+  100% {
+    text-shadow: 4px 4px 40px rgba(5, 60, 255, 1);
+  }
+`;
+
+export const TableLoadingStyles = {
+  display: "flex",
+  fontFamily: "Tactic Sans",
+  fontSize: "32px",
+  fontWeight: 800,
+  animation: `${shadowFade} 0.8s ease-in-out infinite alternate`,
+  justifyContent: "center",
+  marginTop: "20%",
+}
+
 
 

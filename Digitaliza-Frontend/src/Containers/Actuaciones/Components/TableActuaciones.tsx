@@ -1,93 +1,147 @@
-import { Box, 
-  Button, 
-  Typography, 
-  IconButton, 
-  Tooltip } 
-  from "@mui/material";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import { Box, Typography, IconButton, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {
-  MaterialReactTable,
-  useMaterialReactTable,
-  type MRT_ColumnDef,
-  type MRT_Row } 
-   from "material-react-table";
-import { useState } from "react";
-import { useEditableTable } from "../../../hooks/useEditableTable";
+import { MaterialReactTable, useMaterialReactTable, type MRT_ColumnDef, } from "material-react-table";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { BASE_TABLE_CONFIG } from "../../../constants/tableConfig";
-import { data as initialData } from "../../../data/actuacionesData";
 import type { IActuacion } from "../../../types/actuaciones";
 import {
-  TableExportBoxStyles,
-  TableExportButtonStyles,
   TableGeneralStyles,
+  TableLoadingStyles,
   TableTitleStyles,
 } from "../../../styles/TablasStyle";
-import { exportVisibleRows, exportAllData } from "../../../utils/exportToCsv";
+import { useGestionActuaciones } from "../../../hooks/useGestionActuaciones";
+import { deleteActuacion, updateActuacion } from "../../../api/actuacionesApi";
+import { TablaExportButtons } from "./TableButtons";
 
 const TablaActuaciones = () => {
 
-  const { data: editableData, handleUpdate } = useEditableTable<IActuacion>(initialData);
-  const [data, setData] = useState<IActuacion[]>(editableData);
+  const { actuaciones, setActuaciones, loading } = useGestionActuaciones();
+  const [data, setData] = useState<IActuacion[]>([]);
+  const [validationErrors] = useState<Record<number, Record<string, string>>>({});
 
-const handleDeleteRow = async (row: MRT_Row<IActuacion>) => {
-    if (!window.confirm("¿Estás seguro de que deseas eliminar este registro?")) return;
+  useEffect(() => {
+    setData(actuaciones ?? []);
+  }, [actuaciones]);
 
+  const handleDeleteRow = useCallback(async (id: number) => {
+    if (!window.confirm("¿Estás seguro de eliminar este registro?")) return;
+    const prev = data;
+    setData(prev => prev.filter(item => item.id !== id));
+    setActuaciones(prev => prev.filter(item => item.id !== id)); // si querés sync local
     try {
-      //                    CONEXION CON API FUTURA
-      // await deleteActuacion(row.original.id); // si tu backend usa ID
-      // const updated = fetchedData.filter((_, index) => index !== row.index);
-      // setData(updated);
-      const updatedData = data.filter((_, index) => index !== row.index);
-      setData(updatedData);
+      await deleteActuacion(id);
     } catch (error) {
       console.error("Error al eliminar:", error);
-      alert("No se pudo eliminar el registro.");
+      alert("No se pudo eliminar el registro. Se restaurará la lista.");
+      setData(prev);
+      setActuaciones(prev);
     }
-  };
+  }, [data, setActuaciones]);
 
-  const columns: MRT_ColumnDef<IActuacion>[] = [
+  const handleEditCell = useCallback(
+    async (id: number, key: keyof IActuacion, value: any) => {
+      let updatedRow: IActuacion | undefined;
+      setData((prev) => {
+        const idx = prev.findIndex((r) => r.id === id);
+        if (idx === -1) return prev;
+        updatedRow = { ...prev[idx], [key]: value }; // guardamos fila actualizada
+        const newData = [...prev];
+        newData[idx] = updatedRow!;
+        return newData;
+      });
+
+      if (!updatedRow) return;
+
+      const payload: IActuacion = {
+        id: updatedRow.id!,
+        rubro: updatedRow.rubro,
+        distrito: Number(updatedRow.distrito ?? 0),
+        inspector1: updatedRow.inspector1?.trim() || "",
+        inspector2: updatedRow.inspector2?.trim() || "",
+        inspector3: updatedRow.inspector3?.trim() || "",
+        direccion: updatedRow.direccion?.trim() || "",
+        clausuras: Number(updatedRow.clausuras ?? 0),
+      };
+
+      //  Validación 
+      if (!payload.rubro || !payload.direccion || payload.distrito <= 0 || payload.clausuras < 0) {
+        alert("Algunos campos no son válidos. Corrigelos antes de guardar.");
+        return;
+      }
+
+      // Llamada Axios
+      try {
+        await updateActuacion(id, payload);
+      } catch (error) {
+        console.error("Error al actualizar:", error);
+        alert("No se pudo actualizar el registro.");
+      }
+    },
+    []
+  );
+
+
+  const columns = useMemo<MRT_ColumnDef<IActuacion>[]>(() => [
+    {
+      accessorKey: "id",
+      header: "ID",
+      enableHiding: true,
+      enableEditing: false,
+      enableClickToCopy: true,
+    },
     {
       accessorKey: "rubro",
       header: "Rubro",
       muiEditTextFieldProps: ({ row }) => ({
-        onBlur: (e) => handleUpdate(row.index, "rubro", e.target.value),
-      }),
+        error: !!validationErrors[row.original.id]?.rubro,
+        helperText: validationErrors[row.original.id]?.rubro,
+        onBlur: (e) => handleEditCell(row.original.id, "rubro", e.target.value),
+      })
     },
     {
       accessorKey: "distrito",
       header: "Distrito",
       muiEditTextFieldProps: ({ row }) => ({
         type: "number",
-        onBlur: (e) => handleUpdate(row.index, "distrito", Number(e.target.value)),
+        error: !!validationErrors[row.original.id]?.distrito,
+        helperText: validationErrors[row.original.id]?.distrito,
+        onBlur: (e) => handleEditCell(row.original.id, "distrito", Number(e.target.value)),
       }),
     },
     {
       accessorKey: "inspector1",
       header: "Inspector-1",
       muiEditTextFieldProps: ({ row }) => ({
-        onBlur: (e) => handleUpdate(row.index, "inspector1", e.target.value),
+        error: !!validationErrors[row.original.id]?.inspector1,
+        helperText: validationErrors[row.original.id]?.inspector1,
+        onBlur: (e) => handleEditCell(row.original.id, "inspector1", e.target.value),
       }),
     },
     {
       accessorKey: "inspector2",
       header: "Inspector-2",
       muiEditTextFieldProps: ({ row }) => ({
-        onBlur: (e) => handleUpdate(row.index, "inspector2", e.target.value),
+        error: !!validationErrors[row.original.id]?.inspector2,
+        helperText: validationErrors[row.original.id]?.inspector2,
+        onBlur: (e) => handleEditCell(row.original.id, "inspector2", e.target.value),
       }),
     },
     {
       accessorKey: "inspector3",
       header: "Inspector-3",
       muiEditTextFieldProps: ({ row }) => ({
-        onBlur: (e) => handleUpdate(row.index, "inspector3", e.target.value),
+        error: !!validationErrors[row.original.id]?.inspector3,
+        helperText: validationErrors[row.original.id]?.inspector3,
+        onBlur: (e) => handleEditCell(row.original.id, "inspector3", e.target.value),
       }),
     },
     {
       accessorKey: "direccion",
       header: "Dirección",
       muiEditTextFieldProps: ({ row }) => ({
-        onBlur: (e) => handleUpdate(row.index, "direccion", e.target.value),
+        error: !!validationErrors[row.original.id]?.direccion,
+        helperText: validationErrors[row.original.id]?.direccion,
+        onBlur: (e) => handleEditCell(row.original.id, "direccion", e.target.value),
       }),
     },
     {
@@ -95,59 +149,36 @@ const handleDeleteRow = async (row: MRT_Row<IActuacion>) => {
       header: "Clausuras",
       muiEditTextFieldProps: ({ row }) => ({
         type: "number",
-        onBlur: (e) => handleUpdate(row.index, "clausuras", e.target.value),
+        error: !!validationErrors[row.original.id]?.clausuras,
+        helperText: validationErrors[row.original.id]?.clausuras,
+        onBlur: (e) => handleEditCell(row.original.id, "clausuras", Number(e.target.value)),
       }),
     },
-  ];
+  ], [validationErrors])
 
   const table = useMaterialReactTable({
     ...BASE_TABLE_CONFIG,
     columns,
     data,
     enableRowActions: true,
+    initialState: {
+      columnVisibility: { id: false },
+    },
     renderRowActions: ({ row }) => (
       <Box sx={{ display: "flex", gap: "0.5rem" }}>
         <Tooltip title="Eliminar">
-          <IconButton color="error" onClick={() => handleDeleteRow(row)}>
+          <IconButton color="error" onClick={() => handleDeleteRow(Number(row.original.id))}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
       </Box>
     ),
     renderTopToolbarCustomActions: ({ table }) => (
-      <Box sx={TableExportBoxStyles}>
-        <Button
-          onClick={() => exportAllData(data)}
-          startIcon={<FileDownloadIcon />}
-          sx={TableExportButtonStyles}
-        >
-          Exportar todo
-        </Button>
-
-        <Button
-          disabled={
-            !table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()
-          }
-          onClick={() =>
-            exportVisibleRows(table.getSelectedRowModel().rows, table)
-          }
-          startIcon={<FileDownloadIcon />}
-          sx={TableExportButtonStyles}
-        >
-          Exportar seleccionados
-        </Button>
-
-        <Button
-          disabled={table.getRowModel().rows.length === 0}
-          onClick={() => exportVisibleRows(table.getRowModel().rows, table)}
-          startIcon={<FileDownloadIcon />}
-          sx={TableExportButtonStyles}
-        >
-          Exportar página
-        </Button>
-      </Box>
+      <TablaExportButtons data={data} table={table} />
     ),
   });
+
+  if (loading) return <Typography sx={TableLoadingStyles}>Cargando actuaciones...</Typography>;
 
   return (
     <Box sx={{ width: "100%" }}>

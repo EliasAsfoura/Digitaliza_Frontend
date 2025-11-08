@@ -1,4 +1,5 @@
 export interface IActuacion {
+    id: number;
     rubro: string;
     distrito: number;
     inspector1: string;

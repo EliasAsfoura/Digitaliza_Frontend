@@ -1,9 +1,9 @@
 // src/api/actuacionesApi.ts
 import { apiClient } from "./apiClient";
-import { type IActuacion } from "../types/actuaciones";
+import type { IActuacion } from "../types/actuaciones";
 
 export const getActuaciones = async (): Promise<IActuacion[]> => {
-  const { data } = await apiClient.get("/actuaciones");
+  const { data } = await apiClient.get("/");
   return data;
 };
 
@@ -12,11 +12,11 @@ export const createActuacion = async (body: IActuacion): Promise<IActuacion> => 
   return data;
 };
 
-export const updateActuacion = async (id: string, body: IActuacion): Promise<IActuacion> => {
+export const updateActuacion = async (id: number, body: IActuacion): Promise<IActuacion> => {
   const { data } = await apiClient.put(`/actuaciones/${id}`, body);
   return data;
 };
 
-export const deleteActuacion = async (id: string): Promise<void> => {
+export const deleteActuacion = async (id: number): Promise<void> => {
   await apiClient.delete(`/actuaciones/${id}`);
 };

@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, } from "react-router-
 import Login from "./Containers/Login";
 import Inicio from "./Containers/Inicio";
 import Actuaciones from "./Containers/Actuaciones";
+import CargarRelevamientos from "./Containers/CargarRelevamientos";
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Route path="/login" element={ <Login/> } />
         <Route path="/inicio" element={ <Inicio/> } />
         <Route path="/actuaciones" element={ <Actuaciones/> } />
+        <Route path="/cargarRelevamiento" element={ <CargarRelevamientos/> } />
       </Routes>
     </Router>
 

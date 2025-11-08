@@ -1,9 +1,8 @@
-// src/api/relevamientosApi.ts
 import { apiClient } from "./apiClient";
-import { type IRelevamiento } from "../types/relevamientos";
+import type { IRelevamiento } from "../types/relevamientos";
 
 export const getRelevamientos = async (): Promise<IRelevamiento[]> => {
-  const { data } = await apiClient.get("/relevamientos");
+  const { data } = await apiClient.get("/ped");
   return data;
 };
 
@@ -12,8 +11,10 @@ export const createRelevamiento = async (body: IRelevamiento): Promise<IRelevami
   return data;
 };
 
-export const updateRelevamiento = async (id: string, body: IRelevamiento): Promise<IRelevamiento> => {
-  const { data } = await apiClient.put(`/relevamientos/${id}`, body);
+export const updateRelevamiento = async (
+  body: IRelevamiento
+): Promise<IRelevamiento> => {
+  const { data } = await apiClient.put(`/relevamientos/${body.id}`, body);
   return data;
 };
 
