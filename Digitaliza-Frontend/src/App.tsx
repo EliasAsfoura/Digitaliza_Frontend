@@ -3,6 +3,7 @@ import Login from "./Containers/Login";
 import Inicio from "./Containers/Inicio";
 import Actuaciones from "./Containers/Actuaciones";
 import CargarRelevamientos from "./Containers/CargarRelevamientos";
+import CargarActuaciones from "./Containers/CargarActuaciones";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/inicio" element={ <Inicio/> } />
         <Route path="/actuaciones" element={ <Actuaciones/> } />
         <Route path="/cargarRelevamiento" element={ <CargarRelevamientos/> } />
+        <Route path="/cargarActuacion" element={ <CargarActuaciones/> } />
       </Routes>
     </Router>
 
