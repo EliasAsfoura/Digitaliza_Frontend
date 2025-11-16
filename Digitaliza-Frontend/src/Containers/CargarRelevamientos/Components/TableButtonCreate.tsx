@@ -1,5 +1,4 @@
 import { Button } from "@mui/material";
-import { createRow } from "material-react-table";
 
 export const TableButtonCreate = ({ table }: any) => {
     return(
@@ -11,11 +10,7 @@ export const TableButtonCreate = ({ table }: any) => {
           fontFamily: "Tactic Sans",
           textTransform: "none",
         }}
-         onClick={() =>
-          table.setCreatingRow(
-            createRow(table, { id: 0, fecha: "", inspector: "", direccion: "", rubro: "" })
-          )
-        }
+         onClick={() => table.setCreatingRow(true)}
       >
         Crear Relevamiento
       </Button>

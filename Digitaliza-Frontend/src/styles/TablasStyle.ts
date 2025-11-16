@@ -44,11 +44,12 @@ const shadowFade = keyframes`
 export const TableLoadingStyles = {
   display: "flex",
   fontFamily: "Tactic Sans",
-  fontSize: "32px",
+  fontSize: {xs: "25px", md:"32px"},
   fontWeight: 800,
   animation: `${shadowFade} 0.8s ease-in-out infinite alternate`,
   justifyContent: "center",
   marginTop: "20%",
+  marginLeft: {xs:"30%", md:"0%"},
 }
 
 

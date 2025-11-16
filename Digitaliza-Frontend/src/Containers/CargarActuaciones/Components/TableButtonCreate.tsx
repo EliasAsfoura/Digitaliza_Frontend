@@ -1,5 +1,4 @@
 import { Button } from "@mui/material";
-import { createRow } from "material-react-table";
 
 export const TableButtonCreate = ({ table }: any) => {
     return(
@@ -11,7 +10,7 @@ export const TableButtonCreate = ({ table }: any) => {
           fontFamily: "Tactic Sans",
           textTransform: "none",
         }}
-         onClick={() =>table.setCreatingRow(true)}
+         onClick={() => table.setCreatingRow(true)}
       >
         Crear Actuacion
       </Button>

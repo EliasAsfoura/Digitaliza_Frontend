@@ -11,10 +11,8 @@ export const createRelevamiento = async (body: IRelevamiento): Promise<IRelevami
   return data;
 };
 
-export const updateRelevamiento = async (
-  body: IRelevamiento
-): Promise<IRelevamiento> => {
-  const { data } = await apiClient.put(`/relevamientos/${body.id}`, body);
+export const updateRelevamiento = async (id: Number, body: IRelevamiento): Promise<IRelevamiento> => {
+  const { data } = await apiClient.put(`/relevamientos/${id}`, body);
   return data;
 };
 
