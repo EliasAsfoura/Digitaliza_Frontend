@@ -12,6 +12,7 @@ import {
 import { useGestionActuaciones } from "../../../hooks/useGestionActuaciones";
 import { deleteActuacion, updateActuacion } from "../../../api/actuacionesApi";
 import { TablaExportButtons } from "./TableButtons";
+import CardsExpedientes from "./CardsExpedientes";
 
 const TablaActuaciones = () => {
 
@@ -178,7 +179,7 @@ const TablaActuaciones = () => {
     ),
   });
 
-  if (loading) return <Typography sx={TableLoadingStyles}>Cargando actuaciones...</Typography>;
+  if (loading) return <Typography sx={TableLoadingStyles}>Cargando expedientes...</Typography>;
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -192,7 +193,8 @@ const TablaActuaciones = () => {
           },
         }}
       >
-        <Typography sx={TableTitleStyles}>Gestión de Actuaciones</Typography>
+        <Typography sx={TableTitleStyles}>Gestión de Expedientes</Typography>
+        <CardsExpedientes/>
         <MaterialReactTable table={table} />
       </Box>
     </Box>

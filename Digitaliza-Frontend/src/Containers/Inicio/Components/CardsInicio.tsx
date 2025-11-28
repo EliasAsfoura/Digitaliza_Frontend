@@ -5,13 +5,14 @@ import GestionarActuaciones from "../assets-inicio/GestionarActuaciones.svg"
 import VerDashboardLogo from "../assets-inicio/VerDashboardLogo.svg"
 import VerMapaLogo from "../assets-inicio/VerMapaLogo.svg"
 import VerInformeLogo from "../assets-inicio/VerInformeLogo.svg"
+import { Link } from "react-router-dom";
 
 const CardsInicio = (): JSX.Element => {
 
     return (
         <Grid container marginTop={"15px"} padding={5} spacing={8} >
             <Grid size={{ xs: 12, sm: 6, md: 6, lg: 3 }}>
-                <a href="/actuaciones">
+                <Link to="/actuaciones">
 
                     <Grid sx={CardStyle}>
                         <Box component="img" src={GestionarActuaciones} alt="IMG-ACTUACIONES" />
@@ -23,11 +24,11 @@ const CardsInicio = (): JSX.Element => {
                         </Typography>
                     </Grid>
 
-                </a>
+                </Link>
             </Grid>
 
             <Grid size={{ xs: 12, sm: 6, md: 6, lg: 3 }}>
-                <a href="/dashboard">
+                <Link to="/dashboard">
 
                     <Grid sx={CardStyle}>
                         <Box component="img" src={VerDashboardLogo} alt="IMG-DASHBOARD" />
@@ -39,11 +40,11 @@ const CardsInicio = (): JSX.Element => {
                         </Typography>
                     </Grid>
 
-                </a>
+                </Link>
             </Grid>
 
             <Grid size={{ xs: 12, sm: 6, md: 6, lg: 3 }}>
-                <a href="/mapa">
+                <Link to="/mapa">
 
                     <Grid sx={CardStyle}>
                         <Box component="img" src={VerMapaLogo} alt="IMG-MAPA" />
@@ -55,11 +56,11 @@ const CardsInicio = (): JSX.Element => {
                         </Typography>
                     </Grid>
 
-                </a>
+                </Link>
             </Grid>
 
             <Grid size={{ xs: 12, sm: 6, md: 6, lg: 3 }}>
-                <a href="/informe">
+                <Link to="/informe">
 
                     <Grid sx={CardStyle}>
                         <Box component="img" src={VerInformeLogo} alt="IMG-INFORME" />
@@ -71,7 +72,7 @@ const CardsInicio = (): JSX.Element => {
                         </Typography>
                     </Grid>
 
-                </a>
+                </Link>
             </Grid>
 
         </Grid>

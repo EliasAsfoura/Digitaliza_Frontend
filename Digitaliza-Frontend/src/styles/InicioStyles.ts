@@ -38,7 +38,7 @@ export const ButtonStylesInicio = {
     WebkitTextStroke: '1px black',
     textShadow: "2px 2px 0 #000000",
     textTransform: 'none',
-    transition: "boxShadow 0.4s ease, transform 0.4s ease",
+    transition: "box-shadow 0.4s ease, transform 0.4s ease",
     '&:hover': {
         boxShadow: {xs:"6px 4px 0px #000000", sm: "8px 6px 0px #000000" ,md:" 8px 6px 0px #000000"},
         transform: "scale(1.05)"
@@ -65,7 +65,7 @@ export const CardStyle = {
     backgroundColor: "#DADADA",
     border: "4px solid black",
     borderRadius: "12px",
-    transition: "boxShadow 0.4s ease, transform 0.4s ease",
+    transition: "box-shadow 0.4s ease, transform 0.4s ease",
     "&:hover": {
         boxShadow: " 8px 6px 0px #000000",
         transform: "scale(1.05)"

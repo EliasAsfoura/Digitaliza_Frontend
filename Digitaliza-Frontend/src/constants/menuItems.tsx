@@ -7,7 +7,7 @@ import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 export const menuItems = [
   { text: "Cargar Actuación", icon: <CreateNewFolderIcon/>, path: "/cargarActuacion" },
   { text: "Cargar Relevamiento", icon: <NoteAddIcon />, path: "/cargarRelevamiento" },
-  { text: "Gestionar Actuaciones", icon: <DashboardIcon />, path: "/actuaciones" },
+  { text: "Gestionar Expedientes", icon: <DashboardIcon />, path: "/actuaciones" },
   { text: "Dashboard", icon: <BarChartIcon />, path: "/dashboard" },
   { text: "Mapa", icon: <MapIcon />, path: "/mapa" },
 ];

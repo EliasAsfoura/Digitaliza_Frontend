@@ -2,7 +2,7 @@ import { apiClient } from "./apiClient";
 import type { IActuacion } from "../types/actuaciones";
 
 export const getActuaciones = async (): Promise<IActuacion[]> => {
-  const { data } = await apiClient.get("/");
+  const { data } = await apiClient.get("/actuaciones");
   return data;
 };
 

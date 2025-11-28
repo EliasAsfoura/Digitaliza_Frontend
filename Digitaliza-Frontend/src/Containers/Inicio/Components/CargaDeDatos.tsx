@@ -2,6 +2,7 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import LogoSuma from "../assets-inicio/LogoSuma.svg"
 import type { JSX } from "react";
 import { BoxInicio, BoxInputInicio, BoxTitulo, ButtonStylesInicio, LogoSumaStyle, TitleStyle } from "../../../styles/InicioStyles";
+import { Link } from "react-router-dom";
 
 const CargaDeDatos = (): JSX.Element => {
 
@@ -13,31 +14,35 @@ const CargaDeDatos = (): JSX.Element => {
                 </Typography>
             </Box>
 
-            <Grid container 
-            direction={{ xs: "column", md: "row" }} 
-            rowSpacing={2} 
-            sx={BoxInputInicio}>
+            <Grid container
+                direction={{ xs: "column", md: "row" }}
+                rowSpacing={2}
+                sx={BoxInputInicio}>
                 <Grid>
-                    <Button sx={ButtonStylesInicio}>
+                    <Link to="/cargarActuacion">
+                        <Button sx={ButtonStylesInicio}>
 
-                        <Box component={"img"} 
-                        src={LogoSuma} 
-                        sx={LogoSumaStyle} />
+                            <Box component={"img"}
+                                src={LogoSuma}
+                                sx={LogoSumaStyle} />
 
-                        Cargar Actuacion
+                            Cargar Actuacion
 
-                    </Button>
+                        </Button>
+                    </Link>
                 </Grid>
 
                 <Grid>
-                    <Button sx={ButtonStylesInicio}>
+                    <Link to="/cargarRelevamiento">
+                        <Button sx={ButtonStylesInicio}>
 
-                        <Box component={"img"} 
-                        src={LogoSuma} 
-                        sx={LogoSumaStyle} />
+                            <Box component={"img"}
+                                src={LogoSuma}
+                                sx={LogoSumaStyle} />
 
-                        Cargar Relevamiento
-                    </Button>
+                            Cargar Relevamiento
+                        </Button>
+                    </Link>
                 </Grid>
             </Grid>
         </Box>
