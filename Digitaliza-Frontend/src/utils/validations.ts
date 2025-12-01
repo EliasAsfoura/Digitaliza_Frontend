@@ -26,19 +26,57 @@ const isValidRealDate = (value: string) => {
 export const validateActuacion = (a: Partial<IActuacion>) => {
   const errors: Record<string, string | undefined> = {};
 
-  if (!isRequired(a.rubro)) errors.rubro = "Rubro requerido";
-  if (a.rubro && a.rubro.length > 20) errors.rubro = "Rubro demasiado largo";
-  if (!isNumber(a.distrito)) errors.distrito = "Distrito inválido";
-  if (a.distrito && (Number(a.distrito) < 1 || Number(a.distrito) > 10)) errors.distrito = "Distrito fuera de rango (1-10)";
-  if (!isRequired(a.inspector1)) errors.inspector1 = "Inspector requerido";
-  if (a.inspector1 && a.inspector1.length > 20) errors.inspector1 = "Nombre demasiado largo";
-  if (!isRequired(a.inspector2)) errors.inspector2 = "Inspector requerido";
-  if (!isRequired(a.inspector3)) errors.inspector3 = "Inspector requerido";
-  if (!isRequired(a.direccion)) errors.direccion = "Dirección requerida";
-  if (!isNumber(a.clausuras)) errors.clausuras = "Clausuras inválidas";
+  // --- CAMPOS OBLIGATORIOS REALES DE TU INTERFAZ ---
+
+  if (!isRequired(a.orden_trabajo_numero))
+    errors.orden_trabajo_numero = "Número OT requerido";
+
+  if (!isRequired(a.fecha_actuacion))
+    errors.fecha_actuacion = "Fecha requerida";
+
+  if (!isRequired(a.rubro_nombre))
+    errors.rubro_nombre = "Rubro requerido";
+
+  if (!isRequired(a.inspector1))
+    errors.inspector1 = "Inspector 1 requerido";
+
+  if (!isRequired(a.inspector2))
+    errors.inspector2 = "Inspector 2 requerido";
+
+  if (!isRequired(a.inspector3))
+    errors.inspector2 = "Inspector 3 requerido";
+
+  if (!isRequired(a.calle))
+    errors.calle = "Calle requerida";
+
+  if (!isRequired(a.numero))
+    errors.numero = "Número requerido";
+
+  if (!isRequired(a.doc_tipo_codigo))
+    errors.doc_tipo_codigo = "Tipo doc requerido";
+
+  if (!isRequired(a.doc_nro))
+    errors.doc_nro = "Documento requerido";
+
+  if (!isRequired(a.contrib_apellido))
+    errors.contrib_apellido = "Apellido requerido";
+
+  if (!isRequired(a.contrib_nombre))
+    errors.contrib_apellido = "Nombre requerido";
+
+  // --- VALIDACIONES OPCIONALES ---
+  if (a.decomiso_kilos_total != null && !isNumber(a.decomiso_kilos_total))
+    errors.decomiso_kilos_total = "Kilos debe ser numérico";
+
+  if (a.expediente_anio != null && !isNumber(a.expediente_anio))
+    errors.expediente_anio = "Año inválido";
+
+  if (a.oficio_anio != null && !isNumber(a.oficio_anio))
+    errors.oficio_anio = "Año inválido";
 
   return errors;
 };
+
 
 
 // Validaciones Relevamientos

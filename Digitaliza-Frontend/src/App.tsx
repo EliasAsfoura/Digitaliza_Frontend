@@ -6,6 +6,7 @@ import CargarRelevamientos from "./Containers/CargarRelevamientos";
 import CargarActuaciones from "./Containers/CargarActuaciones";
 import Dashboard from "./Containers/Dashboard";
 import Relevamientos from "./Containers/Actuaciones/Containers/Relevamientos";
+import Pendientes from "./Containers/Actuaciones/Containers/Pendientes";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/inicio" element={ <Inicio/> } />
         <Route path="/actuaciones" element={ <Actuaciones/> } />
         <Route path="/relevamientos" element={ <Relevamientos/> } />
+        <Route path="/pendientes" element={ <Pendientes/> } />
         <Route path="/cargarRelevamiento" element={ <CargarRelevamientos/> } />
         <Route path="/cargarActuacion" element={ <CargarActuaciones/> } />
         <Route path="/dashboard" element={ <Dashboard/> } />
