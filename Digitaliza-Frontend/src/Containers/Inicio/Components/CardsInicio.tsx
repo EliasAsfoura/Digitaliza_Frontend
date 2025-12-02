@@ -20,7 +20,7 @@ const CardsInicio = (): JSX.Element => {
                     
                     <Grid sx={StyleBoxTextCard}>
                         <Typography sx={StyleTextCard}>
-                            Gestionar Actuaciones
+                            Gestionar Expedientes
                         </Typography>
                     </Grid>
 

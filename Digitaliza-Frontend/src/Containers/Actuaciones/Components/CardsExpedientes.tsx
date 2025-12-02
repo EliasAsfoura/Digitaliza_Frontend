@@ -37,7 +37,7 @@ const CardsExpedientes = () => {
                         </Box>
                     </Grid>
                 </Link>
-                <Link to="/pendientesDeVinculacionConActa" style={{ textDecoration: "none", color: "inherit", }}>
+                <Link to="/pendientesVinculacionActa" style={{ textDecoration: "none", color: "inherit", }}>
 
                     <Grid sx={CardExpStyleVinc}>
                         <Typography fontFamily={"Tactic Sans"} marginTop={"10px"} fontWeight={500} fontSize={"12px"} color="#5B5B5B">
@@ -48,7 +48,7 @@ const CardsExpedientes = () => {
                         </Box>
                     </Grid>
                 </Link>
-                <Link to="/pendientesDeVinculacionConOficio" style={{ textDecoration: "none", color: "inherit", }}>
+                <Link to="/pendientesVinculacionOficio" style={{ textDecoration: "none", color: "inherit", }}>
 
                     <Grid sx={CardExpStyleVinc}>
                         <Typography fontFamily={"Tactic Sans"} marginTop={"10px"} fontWeight={500} fontSize={"12px"} color="#5B5B5B">
