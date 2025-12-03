@@ -52,5 +52,18 @@ export const TableLoadingStyles = {
   marginLeft: {xs:"30%", md:"0%"},
 }
 
+export const ModalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: {xs: 300, md:600},
+    bgcolor: 'white',
+    border: '2px solid #000',
+    boxShadow: 24,
+    borderRadius: "25px",
+    p: 4,
+};
+
 
 

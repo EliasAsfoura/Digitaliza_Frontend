@@ -209,7 +209,7 @@ const TablaPendientesVinculacionActa = () => {
                     },
                 }}
             >
-                <Typography sx={TableTitleStyles}>Gestión de Pendientes De Vinculacion con Acta</Typography>
+                <Typography sx={TableTitleStyles}>Gestión de Pendientes de Vinculacion con Acta</Typography>
                 <CardsExpedientes />
                 <MaterialReactTable table={table} />
             </Box>
