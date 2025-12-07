@@ -11,7 +11,7 @@ const data = [
 
 export default function DashboardChart() {
   return (
-    <Card sx={{ borderRadius: 3 }}>
+    <Card sx={{ borderRadius: 3, width: {sm: "550px",md:"800px"} }}>
       <CardContent>
         <Typography variant="h6" mb={2}>
           Actuaciones por mes
