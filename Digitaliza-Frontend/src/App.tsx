@@ -9,6 +9,7 @@ import Relevamientos from "./Containers/Actuaciones/Containers/Relevamientos";
 import Pendientes from "./Containers/Actuaciones/Containers/Pendientes";
 import PendientesVinculacionActa from "./Containers/Actuaciones/Containers/PendientesVinculacionActa";
 import PendientesVinculacionOficio from "./Containers/Actuaciones/Containers/PendientesVinculacionOficio";
+import Mapa from "./Containers/Mapa";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="/cargarRelevamiento" element={ <CargarRelevamientos/> } />
         <Route path="/cargarActuacion" element={ <CargarActuaciones/> } />
         <Route path="/dashboard" element={ <Dashboard/> } />
+        <Route path="/mapa" element={ <Mapa/> } />
       </Routes>
     </Router>
 

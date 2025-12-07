@@ -11,7 +11,7 @@ import { usePendientes } from "../../../../../hooks/usePendientes";
 const TablaPendientes = () => {
 
     // Despues hay que colocar el get correspondiente, por ahora ponemos este
-    const { pendientes, setPendientes, loading } = usePendientes();
+    const { pendientes, loading } = usePendientes();
     const [data, setData] = useState<IActuacion[]>([]);
 
     useEffect(() => {
