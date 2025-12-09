@@ -1,3 +1,5 @@
+// src/api/actuacionesApi.ts
+
 import { apiClient } from "./apiClient";
 import type { IActuacion, IActuacionListado } from "../types/actuaciones";
 
@@ -17,10 +19,10 @@ export const createActuacion = async (
   return data;
 };
 
-// ✅ UPDATE correcto con id en la URL
+// ✅ AHORA COINCIDE CON TU BACK: PUT /actuaciones/<id>
 export const updateActuacion = async (
   id: number,
-  body: IActuacion
+  body: Partial<IActuacion>
 ): Promise<IActuacionListado> => {
   const { data } = await apiClient.put(`/actuaciones/${id}`, body);
   return data;
@@ -34,7 +36,7 @@ export const deleteActuacion = async (id: number): Promise<void> => {
 // Catálogos
 // ---------------------------
 
-export type CatalogoItem = { id: number; nombre: string };
+type CatalogoItem = { id: number; nombre: string };
 
 export const getInspectoresCatalogo = async (): Promise<CatalogoItem[]> => {
   const { data } = await apiClient.get("/catalogos/inspectores");
@@ -50,6 +52,7 @@ export const getMotivosCatalogo = async (): Promise<CatalogoItem[]> => {
   const { data } = await apiClient.get("/catalogos/motivos");
   return data;
 };
+
 
 // Si tu UI necesita SOLO strings:
 export const getInspectoresNombres = async (): Promise<string[]> => {

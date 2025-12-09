@@ -1,3 +1,5 @@
+// src/Containers/CargarActuaciones/Components/TablaCargarActuaciones.tsx
+
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -5,6 +7,9 @@ import {
   type MRT_Row,
   type MRT_TableOptions,
 } from "material-react-table";
+
+import SaveIcon from "@mui/icons-material/Save";
+import CloseIcon from "@mui/icons-material/Close";
 
 import { validateActuacion } from "../../../utils/validations";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -22,7 +27,12 @@ import {
   Typography,
   MenuItem,
   Alert,
+  Tooltip,
+  IconButton,
 } from "@mui/material";
+
+import EditIcon from "@mui/icons-material/Edit";
+
 import { TableGeneralStyles, TableTitleStyles } from "../../../styles/TablasStyle";
 import { TABLE_CREAR_ACTUACIONES } from "../../../constants/tableConfig";
 import { TableButtonCreate } from "../../CargarActuaciones/Components/TableButtonCreate";
@@ -47,7 +57,7 @@ const CONTRAPRODUCENCIAS = [
   "OTROS",
 ];
 
-// Motivo comprobación FIJO como pediste
+// Motivo comprobación FIJO
 const COMPROBACION_MOTIVOS = [
   "Falta de higiene",
   "Mercadería vencida",
@@ -58,7 +68,7 @@ const COMPROBACION_MOTIVOS = [
 // tipo flexible para catálogos
 type CatalogItem = { id?: number; nombre: string };
 
-// intenta soportar:
+// soporta:
 // 1) [{id, nombre}, ...]
 // 2) ["nombre", ...]
 const normalizeCatalogNames = (data: any): string[] => {
@@ -75,7 +85,6 @@ const normalizeCatalogNames = (data: any): string[] => {
 // Extrae error del backend
 // ---------------------------
 const extractBackendError = (err: any): string => {
-  // Axios shape usual
   const detail =
     err?.response?.data?.detail ||
     err?.response?.data?.message ||
@@ -88,7 +97,6 @@ const extractBackendError = (err: any): string => {
 };
 
 const TablaCargarActuaciones = () => {
-
   // errores de validación UI
   const [validationErrors, setValidationErrors] = useState<
     Record<string, string | undefined>
@@ -105,10 +113,10 @@ const TablaCargarActuaciones = () => {
   const [rubrosOpts, setRubrosOpts] = useState<string[]>([]);
   const [motivosOpts, setMotivosOpts] = useState<string[]>([]);
 
-  // debounce simple para validar sin molestar tanto
+  // debounce simple
   const debounceRef = useRef<number | null>(null);
 
-  // cargar catálogos al montar
+  // cargar catálogos
   useEffect(() => {
     (async () => {
       try {
@@ -121,18 +129,13 @@ const TablaCargarActuaciones = () => {
         setInspectoresOpts(normalizeCatalogNames(i));
         setRubrosOpts(normalizeCatalogNames(r));
         setMotivosOpts(normalizeCatalogNames(m));
-
       } catch (e) {
         console.error("Error cargando catálogos", e);
-        // no frenamos la vista por catálogos
       }
     })();
   }, []);
 
   const handleChangeWithDebounce = (row: any, columnId: string, value: any) => {
-    // limpiamos error general cuando el usuario escribe
-    if (serverError) setServerError(null);
-
     row._valuesCache[columnId] = value;
 
     if (debounceRef.current !== null) {
@@ -148,7 +151,7 @@ const TablaCargarActuaciones = () => {
     setValidationErrors(validateActuacion(row._valuesCache));
   };
 
-  // convierte "" en null para que el backend no reciba strings vacíos
+  // convierte "" en null
   const emptyStringsToNull = <T extends object>(obj: T): T => {
     const result = {} as T;
     (Object.keys(obj) as (keyof T)[]).forEach((key) => {
@@ -184,55 +187,14 @@ const TablaCargarActuaciones = () => {
 
         // vuelve a abrir fila
         setTimeout(() => table.setCreatingRow(true), 50);
-
       } catch (error) {
-        const msg = extractBackendError(error);
-        setServerError(msg);
         console.error("❌ Error en creación:", error);
+        setServerError(extractBackendError(error));
       }
     };
 
   // ---------------------------
-  // UPDATE handler (primer editar)
-  // ---------------------------
-  const handleEditRowSave: MRT_TableOptions<IActuacion>["onEditingRowSave"] =
-  async ({ values, table, row }) => {
-    setServerError(null);
-
-    const errors = validateActuacion(values as IActuacion);
-
-    if (Object.values(errors).some((e) => e)) {
-      setValidationErrors(errors);
-      return;
-    }
-
-    try {
-      const payload = emptyStringsToNull(values as any);
-
-      // ✅ ahora el update necesita id + body
-      const updated = await updateActuacion(row.original.id, payload as any);
-
-      setData((prev) => {
-        const idx = prev.findIndex((x) => x.id === row.original.id);
-        if (idx === -1) return prev;
-        const copy = [...prev];
-        copy[idx] = updated as any;
-        return copy;
-      });
-
-      table.setEditingRow(null);
-      setValidationErrors({});
-
-    } catch (error) {
-      const msg = extractBackendError(error);
-      setServerError(msg);
-      console.error("❌ Error en actualización:", error);
-    }
-  };
-
-
-  // ---------------------------
-  // Columnas
+  // Columnas (MISMO ORDEN QUE TU ARCHIVO)
   // ---------------------------
   const columns = useMemo<MRT_ColumnDef<IActuacion>[]>(() => [
     {
@@ -265,9 +227,6 @@ const TablaCargarActuaciones = () => {
       }),
     },
 
-    // ---------------------------
-    // Rubro desde catálogo DB
-    // ---------------------------
     {
       accessorKey: "rubro_nombre",
       header: "Rubro",
@@ -285,9 +244,6 @@ const TablaCargarActuaciones = () => {
       }),
     },
 
-    // ---------------------------
-    // Inspectores desde catálogo DB
-    // ---------------------------
     {
       accessorKey: "inspector1",
       header: "Inspector 1",
@@ -337,9 +293,6 @@ const TablaCargarActuaciones = () => {
       }),
     },
 
-    // ---------------------------
-    // Domicilio
-    // ---------------------------
     {
       accessorKey: "calle",
       header: "Calle",
@@ -361,9 +314,6 @@ const TablaCargarActuaciones = () => {
       }),
     },
 
-    // ---------------------------
-    // Tipo actuación (enum fijo)
-    // ---------------------------
     {
       accessorKey: "tipo_actuacion",
       header: "Tipo de actuación",
@@ -381,9 +331,6 @@ const TablaCargarActuaciones = () => {
       }),
     },
 
-    // ---------------------------
-    // Contraproducencia (enum fijo)
-    // ---------------------------
     {
       accessorKey: "contraproducencia",
       header: "Contraproducencia",
@@ -401,9 +348,6 @@ const TablaCargarActuaciones = () => {
       }),
     },
 
-    // ---------------------------
-    // Contribuyente
-    // ---------------------------
     {
       accessorKey: "doc_nro",
       header: "Documento",
@@ -435,9 +379,6 @@ const TablaCargarActuaciones = () => {
       }),
     },
 
-    // ---------------------------
-    // Actas
-    // ---------------------------
     {
       accessorKey: "acta_inspeccion_num",
       header: "Acta inspección",
@@ -456,7 +397,6 @@ const TablaCargarActuaciones = () => {
       }),
     },
 
-    // Motivos notificación desde catálogo DB
     {
       accessorKey: "notificacion_motivo_1",
       header: "Motivo Notificación 1",
@@ -509,7 +449,6 @@ const TablaCargarActuaciones = () => {
       }),
     },
 
-    // Motivo comprobación enum FIJO
     {
       accessorKey: "comprobacion_motivo",
       header: "Motivo Comprobación",
@@ -562,9 +501,6 @@ const TablaCargarActuaciones = () => {
       }),
     },
 
-    // ---------------------------
-    // Expediente/Oficio
-    // ---------------------------
     {
       accessorKey: "expediente_numero",
       header: "Expediente Número",
@@ -613,7 +549,6 @@ const TablaCargarActuaciones = () => {
       }),
     },
 
-    // previas
     {
       accessorKey: "notificacion_previa_num",
       header: "Notificación Previa",
@@ -646,51 +581,115 @@ const TablaCargarActuaciones = () => {
   ], [validationErrors, inspectoresOpts, rubrosOpts, motivosOpts]);
 
   const table = useMaterialReactTable({
-  ...TABLE_CREAR_ACTUACIONES,
-  columns,
-  data,
-  enableEditing: true,
-  editDisplayMode: "row",
-  enableRowActions: true,
+    ...TABLE_CREAR_ACTUACIONES,
+    columns,
+    data,
 
-  onCreatingRowSave: handleCreateNewRow,
+    enableEditing: true,
+    editDisplayMode: "row",
+    enableRowActions: true,
 
-  onEditingRowSave: async ({ values, row, table }) => {
-    try {
-      const updated = await updateActuacion(row.original.id, values as IActuacion);
+    onCreatingRowSave: handleCreateNewRow,
 
-      setData(prev => {
-        const idx = prev.findIndex(x => x.id === row.original.id);
-        if (idx === -1) return prev;
-        const copy = [...prev];
-        copy[idx] = updated as any;
-        return copy;
-      });
+    // ✅ botón de editar funcionando
+renderRowActions: ({ row, table }) => {
+  const isEditing = table.getState().editingRow?.id === row.id;
 
-      table.setEditingRow(null);
-    } catch (e) {
-      console.error(e);
+  return (
+    <Box sx={{ display: "flex", gap: 1 }}>
+      {isEditing ? (
+        <>
+          <Tooltip title="Guardar">
+            <IconButton
+              color="success"
+              onClick={async () => {
+                // armamos valores finales para mandar al PUT
+                const merged = { ...row.original, ...row._valuesCache } as any;
+
+                // disparamos el handler real
+                await table.options.onEditingRowSave?.({
+                  values: merged,
+                  row,
+                  table,
+                } as any);
+              }}
+            >
+              <SaveIcon />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title="Cancelar">
+            <IconButton
+              color="inherit"
+              onClick={() => table.setEditingRow(null)}
+            >
+              <CloseIcon />
+            </IconButton>
+          </Tooltip>
+        </>
+      ) : (
+        <Tooltip title="Editar">
+          <IconButton
+            color="primary"
+            onClick={() => table.setEditingRow(row)}
+          >
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
+      )}
+    </Box>
+  );
+},
+
+
+
+    // ✅ update usando tu mismo enfoque y validaciones
+    onEditingRowSave: async ({ values, row, table }) => {
+  try {
+    setServerError(null);
+
+    const merged = { ...row.original, ...values };
+    const errors = validateActuacion(merged as IActuacion);
+
+    if (Object.values(errors).some((e) => e)) {
+      setValidationErrors(errors);
+      return;
     }
-  },
 
- 
-  initialState: {
-    columnVisibility: { id: false },
-  },
+    const payload = emptyStringsToNull(merged as any);
 
-  renderTopToolbarCustomActions: ({ table }) => (
-    <TableButtonCreate table={table} />
-  ),
-});
+    const updated = await updateActuacion(row.original.id, payload as IActuacion);
 
+    setData((prev) => {
+      const idx = prev.findIndex((x) => x.id === row.original.id);
+      if (idx === -1) return prev;
+      const copy = [...prev];
+      copy[idx] = updated as any;
+      return copy;
+    });
+
+    table.setEditingRow(null);
+    setValidationErrors({});
+  } catch (e: any) {
+    console.error(e);
+    setServerError(extractBackendError(e));
+  }
+},
+
+    initialState: {
+      columnVisibility: { id: false },
+    },
+
+    renderTopToolbarCustomActions: ({ table }) => (
+      <TableButtonCreate table={table} />
+    ),
+  });
 
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ ...TableGeneralStyles }}>
-
         <Typography sx={TableTitleStyles}>Creación de actuación</Typography>
 
-        {/* Error bonito del backend */}
         {serverError && (
           <Box sx={{ mb: 2 }}>
             <Alert severity="error" onClose={() => setServerError(null)}>
@@ -706,3 +705,4 @@ const TablaCargarActuaciones = () => {
 };
 
 export default TablaCargarActuaciones;
+
