@@ -62,7 +62,7 @@ const renderLabel = (props: any) => {
 const RubrosPieChart = ({ isAnimationActive = true }) => {
     return (
         <Box sx={{display:"flex", flexDirection:"column",alignItems:"center",
-            width:"500px", aspectRatio:1
+            width:{xs:"300px", sm:"500px"}, aspectRatio:1
         }}>
             <Typography  fontSize={"20px"} fontWeight={500} color="#000000de">
                 Rubros Clausurados

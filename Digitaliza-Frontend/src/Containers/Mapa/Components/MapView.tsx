@@ -168,20 +168,20 @@ export default function MapaView() {
       <MapContainer center={defaultCenter} zoom={12} style={{ height: "80vh", width: "65vw", border: "2px solid black" }}>
         <TileLayer attribution='&copy; OpenStreetMap' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-        <Paper sx={{ position: "absolute", zIndex: 1000, top: "10px", right: "50px", p: 1, display: "flex", gap: 1, justifyContent: "end", width: { xs: "200px", md: "380px" } }}>
+        <Paper sx={{ position: "absolute", zIndex: 1000, top: "10px", right: {xs:"0px",sm:"50px"}, p: 1, display: "flex", gap: 1, width: { xs: "200px", md: "380px" } }}>
           <DistrictFilter distritos={distritosList} value={filterDistrito} onChange={setFilterDistrito} />
           <SearchBar value={search} onChange={setSearch} onClear={() => { }} />
         </Paper>
 
         {/* Codigo de ejemplo visual distritos */}
 
-        {/* <GeoJSON
+         <GeoJSON
        data={distritosGeo as any}
       style={() => ({ color: "blue", weight: 1.33, fillOpacity: 0.07 })}
        onEachFeature={(f, layer) => {
         layer.bindTooltip((f as any).properties?.nombre || "Distrito");
            }}
-         /> */}
+         />  
 
         {poligonos.map((p) => {
           const geo = wellknown.parse(p.wkt);
@@ -277,19 +277,20 @@ export default function MapaView() {
           justifyContent: "center",
           p: 1,
           gap: 1,
-          backgroundColor: "black",
+          backgroundColor: "#0166FF",
+          border:"1px solid black"
         }}
       >
-        <Button sx={{ fontSize: { xs: "10px", md: "12px" } }} onClick={() => setMode("addLocal")}>
-          ➕ Agregar Local
+        <Button sx={{ fontSize: { xs: "10px", md: "12px" }, width: "auto",color:"white", border:"1px solid black" }} onClick={() => setMode("addLocal")}>
+           Agregar Local
         </Button>
 
-        <Button sx={{ fontSize: { xs: "10px", md: "12px" } }} onClick={() => setMode("draw")}>
-          🖊️ Dibujar
+        <Button sx={{ fontSize: { xs: "10px", md: "12px" } ,color:"white",border:"1px solid black" }} onClick={() => setMode("draw")}>
+           Dibujar
         </Button>
 
-        <Button sx={{ fontSize: { xs: "10px", md: "12px" } }} onClick={() => setMode("normal")}>
-          🔓 Salir Modo
+        <Button sx={{ fontSize: { xs: "10px", md: "12px" } ,color:"white", border:"1px solid black"}} onClick={() => setMode("normal")}>
+           Salir Modo
         </Button>
       </Paper>
 

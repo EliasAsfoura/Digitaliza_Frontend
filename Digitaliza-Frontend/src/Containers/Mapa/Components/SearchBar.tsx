@@ -7,7 +7,7 @@ type Props = { value: string; onChange: (v: string) => void; onClear?: () => voi
 export default function SearchBar({ value, onChange, onClear }: Props) {
   return (
     <TextField
-    sx={{fontSize:"5px"}}
+    sx={{fontSize:"5px",}}
       size="small"
       placeholder="Buscar locales..."
       value={value}
