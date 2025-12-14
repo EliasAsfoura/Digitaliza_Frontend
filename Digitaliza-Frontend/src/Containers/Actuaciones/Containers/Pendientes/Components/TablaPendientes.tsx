@@ -6,12 +6,12 @@ import { TablaExportButtons } from "../../../Components/TableButtons";
 import { Box, Typography } from "@mui/material";
 import { TableGeneralStyles, TableLoadingStyles, TableTitleStyles } from "../../../../../styles/TablasStyle";
 import CardsExpedientes from "../../../Components/CardsExpedientes";
-import { usePendientes } from "../../../../../hooks/usePendientes";
+import { usePendientesNotificacion } from "../../../../../hooks/usePendientesNotificacion";
 
 const TablaPendientes = () => {
 
     // Despues hay que colocar el get correspondiente, por ahora ponemos este
-    const { pendientes, loading } = usePendientes();
+const { pendientes, loading } = usePendientesNotificacion();
     const [data, setData] = useState<IActuacion[]>([]);
 
     useEffect(() => {

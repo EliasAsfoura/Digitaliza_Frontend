@@ -1,17 +1,23 @@
+// DashboardChart.tsx
 import { Card, CardContent, Typography } from "@mui/material";
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
-const data = [
-  { name: "Ene", actu: 40 },
-  { name: "Feb", actu: 55 },
-  { name: "Mar", actu: 90 },
-  { name: "Abr", actu: 75 },
-  { name: "May", actu: 120 },
-];
+import type { ActuacionesPorMesItem } from "../../../api/dashboardApi";
 
-export default function DashboardChart() {
+type Props = {
+  data: ActuacionesPorMesItem[];
+};
+
+const DashboardChart = ({ data }: Props) => {
   return (
-    <Card sx={{ borderRadius: 3, width: {sm: "550px",md:"800px"} }}>
+    <Card sx={{ borderRadius: 3, width: { sm: "550px", md: "800px" } }}>
       <CardContent>
         <Typography variant="h6" mb={2}>
           Actuaciones por mes
@@ -19,7 +25,7 @@ export default function DashboardChart() {
 
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={data}>
-            <XAxis dataKey="name" />
+            <XAxis dataKey="mes" />
             <YAxis />
             <Tooltip />
             <Line type="monotone" dataKey="actu" stroke="#1976d2" strokeWidth={3} />
@@ -28,4 +34,6 @@ export default function DashboardChart() {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default DashboardChart;
